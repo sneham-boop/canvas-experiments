@@ -25,28 +25,28 @@ const sketch = () => {
 
     const x = width * 0.5; // x, y : center of canvas
     const y = height * 0.5;
-    const w = width * 0.8; // diameter of the circle
-    const h = Math.floor(Math.random() * 0 + 1); // how thick each line can be
-    const divisions = Math.floor(Math.random() * 360 + 1); // number of divisions
+
+    const layers = 8;
     
-    // const maxLengthEachLine = 400;
-    // const randomLength = Math.floor(Math.random() * maxLengthEachLine + 1);
+    for (let layer = 1; layer < layers + 1; layer++) {
+      const w = width * (1 - 0.1 * layer+0.1); // diameter of the circle
+      const divisions = Math.floor(Math.random() * 360 + 1); // number of divisions
 
-    
-    for (let i = 0; i < divisions; i++) {
-      const step = 360 / divisions;
-      const maxLengthEachLine = 400;
-      const randomLength = Math.floor(Math.random() * maxLengthEachLine + 1);
+      for (let i = 0; i < divisions; i++) {
+        const maxLengthEachLine = 50;
+        const randomLength = Math.floor(Math.random() * maxLengthEachLine + 1);
+        const step = 360 / divisions;
+        const h = Math.floor(Math.random() * 3 + 1); // how thick each line can be
 
-      context.save();
-      context.translate(x, y);
-      context.rotate(degToRad(step * i));
-      context.fillStyle = "black";
-
-      context.beginPath();
-      context.rect(-w * 0.5, -h * 0.5, randomLength, h);
-      context.fill();
-      context.restore();
+        context.save();
+        context.translate(x, y);
+        context.rotate(degToRad(step * i));
+        context.fillStyle = "black";
+        context.beginPath();
+        context.rect(-w * 0.5, -h * 0.5, randomLength, h);
+        context.fill();
+        context.restore();
+      }
     }
 
     // circle at the center
