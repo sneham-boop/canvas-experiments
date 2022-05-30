@@ -27,20 +27,20 @@ const sketch = () => {
     const y = height * 0.5;
 
     const layers = 8;
-    
+    const maxLengthEachLine = width * 0.02;
+
     for (let layer = 1; layer < layers + 1; layer++) {
-      const w = width * (1 - 0.1 * layer+0.1); // diameter of the circle
+      const w = width * (1 - 0.1 * layer + 0.01); // diameter of the circle
       const divisions = Math.floor(Math.random() * 360 + 1); // number of divisions
 
-      for (let i = 0; i < divisions; i++) {
-        const maxLengthEachLine = 50;
+      for (let division = 0; division < divisions; division++) {
         const randomLength = Math.floor(Math.random() * maxLengthEachLine + 1);
         const step = 360 / divisions;
-        const h = Math.floor(Math.random() * 3 + 1); // how thick each line can be
+        const h = Math.floor(Math.random() * 1 + 1); // how thick each line can be
 
         context.save();
         context.translate(x, y);
-        context.rotate(degToRad(step * i));
+        context.rotate(degToRad(step * division));
         context.fillStyle = "black";
         context.beginPath();
         context.rect(-w * 0.5, -h * 0.5, randomLength, h);
@@ -50,9 +50,9 @@ const sketch = () => {
     }
 
     // circle at the center
-    context.fillStyle = "black";
+    context.fillStyle = "tomato";
     context.beginPath();
-    context.arc(x, y, 5, 0, Math.PI * 2);
+    context.arc(x, y, 30, 0, Math.PI * 2);
     context.fill();
   };
 };
