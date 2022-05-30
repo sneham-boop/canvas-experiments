@@ -4,30 +4,56 @@ const settings = {
   dimensions: [1080, 1080],
 };
 
+const degToRad = (deg) => {
+  return (deg / 180) * Math.PI;
+};
+
 const sketch = () => {
   return ({ context, width, height }) => {
-    context.fillStyle = "white";
-    context.fillRect(0, 0, width, height);
+    // Margin in inches
+    const margin = 1 / 4;
 
-    const x = width*0.5;
-    const y = height*0.5;
-    const w = width * 0.3;
-    const h = height * 0.3;
+    // Off-white background
+    // Gradient foreground
+    const fill = context.createLinearGradient(0, 0, width, height);
+    fill.addColorStop(0, "tomato");
+    fill.addColorStop(1, "yellow");
 
-    context.save();
-    context.translate(x,y)
-    context.rotate(0.8);
-    context.fillStyle = "tomato";
+    // Fill rectangle
+    context.fillStyle = fill;
+    context.fillRect(margin, margin, width - margin * 2, height - margin * 2);
+
+    const x = width * 0.5; // x, y : center of canvas
+    const y = height * 0.5;
+    const w = width * 0.8; // diameter of the circle
+    const h = Math.floor(Math.random() * 0 + 1); // how thick each line can be
+    const divisions = Math.floor(Math.random() * 360 + 1); // number of divisions
+    
+    // const maxLengthEachLine = 400;
+    // const randomLength = Math.floor(Math.random() * maxLengthEachLine + 1);
+
+    
+    for (let i = 0; i < divisions; i++) {
+      const step = 360 / divisions;
+      const maxLengthEachLine = 400;
+      const randomLength = Math.floor(Math.random() * maxLengthEachLine + 1);
+
+      context.save();
+      context.translate(x, y);
+      context.rotate(degToRad(step * i));
+      context.fillStyle = "black";
+
+      context.beginPath();
+      context.rect(-w * 0.5, -h * 0.5, randomLength, h);
+      context.fill();
+      context.restore();
+    }
+
+    // circle at the center
+    context.fillStyle = "black";
     context.beginPath();
-    context.rect(-w*0.5, -h*0.5, w, h);
+    context.arc(x, y, 5, 0, Math.PI * 2);
     context.fill();
-    context.restore();
-
-    context.fillStyle = "yellow";
-    context.beginPath();
-    context.arc(x, y, 100 ,0,Math.PI*2);
-    context.fill();
-
   };
 };
 
